@@ -7,11 +7,6 @@ RUN apt-get update && apt-get install -y \
   ruby-dev zlib1g-dev liblzma-dev libgmp-dev \
    --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-# see http://guides.rubyonrails.org/command_line.html#rails-dbconsole
-# RUN apt-get update && apt-get install -y postgresql-client sqlite3 --no-install-recommends && rm -rf /var/lib/apt/lists/*
-# RUN apt-get update && apt-get install -y libxml2-dev libxslt1-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
-# RUN apt-get update && apt-get install -y build-essential patch ruby-dev zlib1g-dev liblzma-dev libgmp-dev libsqlite3-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
-
 ENV RAILS_VERSION '5.0.0.beta3'
 
 RUN gem install rails --version "$RAILS_VERSION"
@@ -20,6 +15,7 @@ RUN mkdir /app
 WORKDIR /app
 ADD Gemfile /app/Gemfile
 ADD Gemfile.lock /app/Gemfile.lock
+
 RUN bundle config build.nokogiri --use-system-libraries \
  && bundle config build.therubyracer --use-system-libraries \
  && bundle config build.libv8 --with-system-v8 \
